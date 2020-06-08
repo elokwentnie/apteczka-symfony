@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +42,22 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Listalek::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $listaleks;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Apteczka::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $apteczki;
+
+    public function __construct()
+    {
+        $this->listaleks = new ArrayCollection();
+        $this->apteczki = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,6 +145,68 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Listalek[]
+     */
+    public function getListaleks(): Collection
+    {
+        return $this->listaleks;
+    }
+
+    public function addListalek(Listalek $listalek): self
+    {
+        if (!$this->listaleks->contains($listalek)) {
+            $this->listaleks[] = $listalek;
+            $listalek->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListalek(Listalek $listalek): self
+    {
+        if ($this->listaleks->contains($listalek)) {
+            $this->listaleks->removeElement($listalek);
+            // set the owning side to null (unless already changed)
+            if ($listalek->getUser() === $this) {
+                $listalek->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Apteczka[]
+     */
+    public function getApteczki(): Collection
+    {
+        return $this->apteczki;
+    }
+
+    public function addApteczki(Apteczka $apteczki): self
+    {
+        if (!$this->apteczki->contains($apteczki)) {
+            $this->apteczki[] = $apteczki;
+            $apteczki->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApteczki(Apteczka $apteczki): self
+    {
+        if ($this->apteczki->contains($apteczki)) {
+            $this->apteczki->removeElement($apteczki);
+            // set the owning side to null (unless already changed)
+            if ($apteczki->getUser() === $this) {
+                $apteczki->setUser(null);
+            }
+        }
 
         return $this;
     }

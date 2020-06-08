@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -111,6 +113,47 @@ class Listalekow
      * @ORM\Column(name="id_FirmawPL", type="integer", nullable=false)
      */
     private $idFirmawpl;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Listalek::class, mappedBy="slowniklekow")
+     */
+    private $listaleks;
+
+    public function __construct()
+    {
+        $this->listaleks = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Listalek[]
+     */
+    public function getListaleks(): Collection
+    {
+        return $this->listaleks;
+    }
+
+    public function addListalek(Listalek $listalek): self
+    {
+        if (!$this->listaleks->contains($listalek)) {
+            $this->listaleks[] = $listalek;
+            $listalek->setSlowniklekow($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListalek(Listalek $listalek): self
+    {
+        if ($this->listaleks->contains($listalek)) {
+            $this->listaleks->removeElement($listalek);
+            // set the owning side to null (unless already changed)
+            if ($listalek->getSlowniklekow() === $this) {
+                $listalek->setSlowniklekow(null);
+            }
+        }
+
+        return $this;
+    }
 
 
 }
