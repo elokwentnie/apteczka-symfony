@@ -115,7 +115,7 @@ class Listalekow
     private $idFirmawpl;
 
     /**
-     * @ORM\OneToMany(targetEntity=Listalek::class, mappedBy="slowniklekow")
+     * @ORM\OneToMany(targetEntity=Medykament::class, mappedBy="slowniklekow")
      */
     private $listaleks;
 
@@ -132,7 +132,7 @@ class Listalekow
         return $this->listaleks;
     }
 
-    public function addListalek(Listalek $listalek): self
+    public function addListalek(Medykament $listalek): self
     {
         if (!$this->listaleks->contains($listalek)) {
             $this->listaleks[] = $listalek;
@@ -142,7 +142,7 @@ class Listalekow
         return $this;
     }
 
-    public function removeListalek(Listalek $listalek): self
+    public function removeListalek(Medykament $listalek): self
     {
         if ($this->listaleks->contains($listalek)) {
             $this->listaleks->removeElement($listalek);

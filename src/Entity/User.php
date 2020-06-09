@@ -44,18 +44,12 @@ class User implements UserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\OneToMany(targetEntity=Listalek::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $listaleks;
-
-    /**
      * @ORM\OneToMany(targetEntity=Apteczka::class, mappedBy="user", orphanRemoval=true)
      */
     private $apteczki;
 
     public function __construct()
     {
-        $this->listaleks = new ArrayCollection();
         $this->apteczki = new ArrayCollection();
     }
 
@@ -149,36 +143,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Listalek[]
-     */
-    public function getListaleks(): Collection
-    {
-        return $this->listaleks;
-    }
 
-    public function addListalek(Listalek $listalek): self
-    {
-        if (!$this->listaleks->contains($listalek)) {
-            $this->listaleks[] = $listalek;
-            $listalek->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeListalek(Listalek $listalek): self
-    {
-        if ($this->listaleks->contains($listalek)) {
-            $this->listaleks->removeElement($listalek);
-            // set the owning side to null (unless already changed)
-            if ($listalek->getUser() === $this) {
-                $listalek->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Apteczka[]

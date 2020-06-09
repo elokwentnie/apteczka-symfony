@@ -32,9 +32,9 @@ class ApteczkaController extends AbstractController
     public function new(Request $request, Security $security): Response
     {
         $apteczka = new Apteczka();
+       
         $form = $this->createForm(ApteczkaType::class, $apteczka);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $user = $security->getUser();
@@ -43,6 +43,12 @@ class ApteczkaController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('apteczka_index');
+        }
+        try {
+            $d = $form->createView();
+
+        } catch(\Throwable $x){
+            var_dump($x);
         }
 
         return $this->render('apteczka/new.html.twig', [

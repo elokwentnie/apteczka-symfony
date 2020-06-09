@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ListalekRepository;
+use App\Repository\MedykamentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ListalekRepository::class)
+ * @ORM\Entity(repositoryClass=MedykamentRepository::class)
  */
-class Listalek
+class Medykament
 {
     /**
      * @ORM\Id()
@@ -17,11 +17,6 @@ class Listalek
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="listaleks")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     /**
      * @ORM\Column(type="date")
@@ -39,22 +34,17 @@ class Listalek
      */
     private $slowniklekow;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Apteczka::class, inversedBy="medykamenty")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $apteczka;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
-
-    public function setUser(?user $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
     public function getDatawaznosci(): ?\DateTimeInterface
     {
@@ -88,6 +78,18 @@ class Listalek
     public function setSlowniklekow(?Listalekow $slowniklekow): self
     {
         $this->slowniklekow = $slowniklekow;
+
+        return $this;
+    }
+
+    public function getApteczka(): ?Apteczka
+    {
+        return $this->apteczka;
+    }
+
+    public function setApteczka(?Apteczka $apteczka): self
+    {
+        $this->apteczka = $apteczka;
 
         return $this;
     }

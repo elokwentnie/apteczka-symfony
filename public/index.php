@@ -9,7 +9,7 @@ require dirname(__DIR__).'/vendor/autoload.php';
 
 (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 
-set_time_limit(30000);
+set_time_limit(3000);
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);
 

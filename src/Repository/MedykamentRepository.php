@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\Listalek;
+use App\Entity\MedykamentMedykament;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Listalek|null find($id, $lockMode = null, $lockVersion = null)
- * @method Listalek|null findOneBy(array $criteria, array $orderBy = null)
- * @method Listalek[]    findAll()
- * @method Listalek[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Medykament|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Medykament|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Medykament[]    findAll()
+ * @method Medykament[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ListalekRepository extends ServiceEntityRepository
+class MedykamentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Listalek::class);
+        parent::__construct($registry, Medykament::class);
     }
 
     // /**

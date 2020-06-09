@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ApteczkaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +30,17 @@ class Apteczka
      */
     private $nazwa;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Medykament::class, mappedBy="apteczka", orphanRemoval=true)
+     */
+    private $medykamenty;
+
+    public function __construct()
+    {
+        $this->medykamenty = new ArrayCollection();
+    }
+
+ 
     public function getId(): ?int
     {
         return $this->id;
@@ -56,4 +69,37 @@ class Apteczka
 
         return $this;
     }
+
+    /**
+     * @return Collection|Medykament[]
+     */
+    public function getMedykamenty(): Collection
+    {
+        return $this->medykamenty;
+    }
+
+    public function addMedykamenty(Medykament $medykamenty): self
+    {
+        if (!$this->medykamenty->contains($medykamenty)) {
+            $this->medykamenty[] = $medykamenty;
+            $medykamenty->setApteczka($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedykamenty(Medykament $medykamenty): self
+    {
+        if ($this->medykamenty->contains($medykamenty)) {
+            $this->medykamenty->removeElement($medykamenty);
+            // set the owning side to null (unless already changed)
+            if ($medykamenty->getApteczka() === $this) {
+                $medykamenty->setApteczka(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

@@ -2,6 +2,8 @@
 
 namespace App\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use App\Form\MedykamentType;
 use App\Entity\Apteczka;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,6 +16,11 @@ class ApteczkaType extends AbstractType
         $builder
             ->add('nazwa')
         ;
+        $builder->add('medykamenty', CollectionType::class, [
+            'entry_type' => MedykamentType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
