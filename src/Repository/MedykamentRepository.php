@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\MedykamentMedykament;
+use App\Entity\Medykament;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -124,6 +124,13 @@ class Listalekow
         $this->listaleks = new ArrayCollection();
     }
 
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getnazwahadlowa() {
+        return $this->nazwahandlowa;
+    }
     /**
      * @return Collection|Listalek[]
      */

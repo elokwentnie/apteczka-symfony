@@ -3,6 +3,12 @@
 {% block title %}Apteczka index{% endblock %}
 
 {% block body %}
+<p>To wyrzuć!</p>
+    <ul style="color:red">
+     {% for p  in przeterminowane %}
+         <li>{{p}}</li>
+     {% endfor %}
+    </ul>
     <h1>Apteczka index</h1>
 
     <table class="table">

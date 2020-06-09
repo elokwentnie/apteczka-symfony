@@ -19,10 +19,30 @@ class ApteczkaController extends AbstractController
     /**
      * @Route("/", name="apteczka_index", methods={"GET"})
      */
-    public function index(ApteczkaRepository $apteczkaRepository): Response
+    public function index(ApteczkaRepository $apteczkaRepository, Security $s): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $apteczki = $apteczkaRepository->findBy([
+            'user' => $s->getUser()
+        ]);
+        $prztermonowane = [];
+        foreach($apteczki as $apt) {
+            foreach ($apt->getMedykamenty() as $med) {
+                if ($med->getDatawaznosci() < new \Datetime()) {
+                    $prztermonowane[] = sprintf('%s, ilość: %s, data: %s, apteczka: %s', 
+                    $med->getslowniklekow()->getnazwahadlowa(),
+                    $med->getIlosc(),
+                    $med->getDatawaznosci()->format('Y-m-d'),
+                    $apt->getNazwa()
+                );
+                }
+            }
+        }
+
+
         return $this->render('apteczka/index.html.twig', [
-            'apteczkas' => $apteczkaRepository->findAll(),
+            'apteczkas' => $apteczki,
+            'przeterminowane' => $prztermonowane
         ]);
     }
 
@@ -31,24 +51,22 @@ class ApteczkaController extends AbstractController
      */
     public function new(Request $request, Security $security): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $apteczka = new Apteczka();
-       
+
         $form = $this->createForm(ApteczkaType::class, $apteczka);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $user = $security->getUser();
             $apteczka -> setUser($user);
+            foreach ($apteczka->getMedykamenty() as $a) {
+                $a->setApteczka($apteczka);
+            }
             $entityManager->persist($apteczka);
             $entityManager->flush();
 
             return $this->redirectToRoute('apteczka_index');
-        }
-        try {
-            $d = $form->createView();
-
-        } catch(\Throwable $x){
-            var_dump($x);
         }
 
         return $this->render('apteczka/new.html.twig', [
@@ -60,8 +78,12 @@ class ApteczkaController extends AbstractController
     /**
      * @Route("/{id}", name="apteczka_show", methods={"GET"})
      */
-    public function show(Apteczka $apteczka): Response
+    public function show(Apteczka $apteczka, Security $security): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if($security->getUser() !== $apteczka->getUser()) {
+            die('to nie twoja apteczka złodzieju');
+        }
         return $this->render('apteczka/show.html.twig', [
             'apteczka' => $apteczka,
         ]);
@@ -70,12 +92,19 @@ class ApteczkaController extends AbstractController
     /**
      * @Route("/{id}/edit", name="apteczka_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Apteczka $apteczka): Response
+    public function edit(Request $request, Apteczka $apteczka, Security $security): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if($security->getUser() !== $apteczka->getUser()) {
+            die('to nie twoja apteczka złodzieju');
+        }
         $form = $this->createForm(ApteczkaType::class, $apteczka);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($apteczka->getMedykamenty() as $a) {
+                $a->setApteczka($apteczka);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('apteczka_index');
@@ -90,8 +119,13 @@ class ApteczkaController extends AbstractController
     /**
      * @Route("/{id}", name="apteczka_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Apteczka $apteczka): Response
+    public function delete(Request $request, Apteczka $apteczka, Security $security): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if($security->getUser() !== $apteczka->getUser()) {
+            die('to nie twoja apteczka złodzieju');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$apteczka->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($apteczka);

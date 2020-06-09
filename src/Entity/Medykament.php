@@ -29,7 +29,7 @@ class Medykament
     private $ilosc;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Listalekow::class, inversedBy="listaleks")
+     * @ORM\ManyToOne(targetEntity=Listalekow::class, inversedBy="listaleks", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $slowniklekow;
@@ -39,6 +39,16 @@ class Medykament
      * @ORM\JoinColumn(nullable=false)
      */
     private $apteczka;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $wydanych;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $zutylizowanych;
 
     public function getId(): ?int
     {
@@ -90,6 +100,30 @@ class Medykament
     public function setApteczka(?Apteczka $apteczka): self
     {
         $this->apteczka = $apteczka;
+
+        return $this;
+    }
+
+    public function getWydanych(): ?int
+    {
+        return $this->wydanych;
+    }
+
+    public function setWydanych(?int $wydanych): self
+    {
+        $this->wydanych = $wydanych;
+
+        return $this;
+    }
+
+    public function getZutylizowanych(): ?bool
+    {
+        return $this->zutylizowanych;
+    }
+
+    public function setZutylizowanych(?bool $zutylizowanych): self
+    {
+        $this->zutylizowanych = $zutylizowanych;
 
         return $this;
     }

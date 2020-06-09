@@ -31,7 +31,7 @@ class Apteczka
     private $nazwa;
 
     /**
-     * @ORM\OneToMany(targetEntity=Medykament::class, mappedBy="apteczka", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Medykament::class, mappedBy="apteczka", orphanRemoval=true, cascade={"persist"})
      */
     private $medykamenty;
 
@@ -100,6 +100,4 @@ class Apteczka
 
         return $this;
     }
-
-
 }
