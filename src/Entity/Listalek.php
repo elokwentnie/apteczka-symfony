@@ -18,7 +18,7 @@ class Listalek
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="listaleks")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="listaleks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -34,7 +34,7 @@ class Listalek
     private $ilosc;
 
     /**
-     * @ORM\ManyToOne(targetEntity=listalekow::class, inversedBy="listaleks")
+     * @ORM\ManyToOne(targetEntity=Listalekow::class, inversedBy="listaleks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $slowniklekow;
@@ -80,12 +80,12 @@ class Listalek
         return $this;
     }
 
-    public function getSlowniklekow(): ?listalekow
+    public function getSlowniklekow(): ?Listalekow
     {
         return $this->slowniklekow;
     }
 
-    public function setSlowniklekow(?listalekow $slowniklekow): self
+    public function setSlowniklekow(?Listalekow $slowniklekow): self
     {
         $this->slowniklekow = $slowniklekow;
 
