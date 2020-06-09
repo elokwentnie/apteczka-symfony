@@ -18,7 +18,7 @@ class Apteczka
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="apteczki")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="apteczki")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Apteczka{% endblock %}
+
+{% block body %}
+    <h1>Edit Apteczka</h1>
+
+    {{ include('apteczka/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('apteczka_index') }}">back to list</a>
+
+    {{ include('apteczka/_delete_form.html.twig') }}
+{% endblock %}
