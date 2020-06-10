@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Apteczka;
 use App\Form\ApteczkaType;
 use App\Repository\ApteczkaRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -92,8 +93,10 @@ class ApteczkaController extends AbstractController
     /**
      * @Route("/{id}/edit", name="apteczka_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Apteczka $apteczka, Security $security): Response
+    public function edit(Request $request, Apteczka $apteczka, Security $security, EntityManagerInterface $em): Response
     {
+        $em->beginTransaction();
+        $this->getDoctrine()->getManager();
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if($security->getUser() !== $apteczka->getUser()) {
             die('to nie twoja apteczka');
@@ -106,6 +109,7 @@ class ApteczkaController extends AbstractController
                 $a->setApteczka($apteczka);
             }
             $this->getDoctrine()->getManager()->flush();
+            $em->commit();
 
             return $this->redirectToRoute('apteczka_index');
         }

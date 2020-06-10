@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Apteczka
 {
+    //definiuja mapowanie struktury bazodanowa na strukture obiektow
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

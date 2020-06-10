@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Listalekow
  *
- * @ORM\Table(name="listalekow", indexes={@ORM\Index(name="id_PodmiotOdpow", columns={"id_PodmiotOdpow"}), @ORM\Index(name="id_FirmawPL", columns={"id_FirmawPL"}), @ORM\Index(name="id_status", columns={"id_status"})})
+ * @ORM\Table(name="ListaLekow", indexes={@ORM\Index(name="id_PodmiotOdpow", columns={"id_PodmiotOdpow"}), @ORM\Index(name="id_FirmawPL", columns={"id_FirmawPL"}), @ORM\Index(name="id_status", columns={"id_status"})})
  * @ORM\Entity
  */
 class Listalekow
@@ -36,13 +36,6 @@ class Listalekow
      * @ORM\Column(name="NazwaHandlowa", type="string", length=120, nullable=true, options={"default"="''"})
      */
     private $nazwahandlowa = '\'\'';
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_PodmiotOdpow", type="integer", nullable=false)
-     */
-    private $idPodmiotodpow;
 
     /**
      * @var string|null
@@ -106,13 +99,6 @@ class Listalekow
      * @ORM\Column(name="SynonimFarmaceutyczny", type="string", length=129, nullable=true, options={"default"="''"})
      */
     private $synonimfarmaceutyczny = '\'\'';
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_FirmawPL", type="integer", nullable=false)
-     */
-    private $idFirmawpl;
 
     /**
      * @ORM\OneToMany(targetEntity=Medykament::class, mappedBy="slowniklekow")
