@@ -48,6 +48,7 @@ class MedykamentController extends AbstractController
         if ($medykament->getIlosc() == 0) {
             $entityManager->remove($medykament);
         }
+        //walidacja ilosci dodac :)
         $entityManager->flush();
 
         return $this->redirectToRoute('apteczka_show', [

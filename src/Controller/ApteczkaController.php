@@ -96,7 +96,7 @@ class ApteczkaController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if($security->getUser() !== $apteczka->getUser()) {
-            die('to nie twoja apteczka złodzieju');
+            die('to nie twoja apteczka');
         }
         $form = $this->createForm(ApteczkaType::class, $apteczka);
         $form->handleRequest($request);

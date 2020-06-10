@@ -1,22 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Apteczka index{% endblock %}
+{% block title %}Twoje Apteczki{% endblock %}
 
 {% block body %}
-<p>To wyrzuć!</p>
+<p>Zutylizuj przeterminowane leki z poniższych apteczek:</p>
     <ul style="color:red">
      {% for p  in przeterminowane %}
          <li>{{p}}</li>
      {% endfor %}
     </ul>
-    <h1>Apteczka index</h1>
+    <h1>Twoje Apteczki</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nazwa</th>
-                <th>actions</th>
+                <th>Zarządzaj</th>
             </tr>
         </thead>
         <tbody>
@@ -25,17 +25,18 @@
                 <td>{{ apteczka.id }}</td>
                 <td>{{ apteczka.nazwa }}</td>
                 <td>
-                    <a href="{{ path('apteczka_show', {'id': apteczka.id}) }}">show</a>
-                    <a href="{{ path('apteczka_edit', {'id': apteczka.id}) }}">edit</a>
+                    <a href="{{ path('apteczka_show', {'id': apteczka.id}) }}">Pokaż</a>
+                    &nbsp; &nbsp;
+                    <a href="{{ path('apteczka_edit', {'id': apteczka.id}) }}">Edytuj</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Nie zarządzasz aktualnie żadnymi apteczkami.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('apteczka_new') }}">Create new</a>
+    <a href="{{ path('apteczka_new') }}">Stwórz nową apteczkę</a>
 {% endblock %}

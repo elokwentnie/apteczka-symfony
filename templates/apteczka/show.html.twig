@@ -5,62 +5,41 @@
 {% block body %}
     <h1>Apteczka</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ apteczka.id }}</td>
-            </tr>
-            <tr>
-                <th>Nazwa</th>
-                <td>{{ apteczka.nazwa }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <h3> Witaj w {{ apteczka.nazwa }} </h3>
 
-    <table class="table">
+    <table class="table table-hover">
     <tr>
-    <th>
-    Nazwa
-    </th>
-    <th>
-    Data waznosci
-    </th>
-    <th>
-    Ilosc
-    </th>
+        <th>Nazwa</th>
+        <th>Data waznosci</th>
+        <th>Ilosc</th>
+        <th>Utylizuj</th>
+        <th>Wydaj</th>
     </tr>
     {% for lek in apteczka.medykamenty %}
-
-    
     <tr>
+    <td>{{lek.slowniklekow.nazwahadlowa}}</td>
+    <td>{{lek.datawaznosci|date}}</td>
+    <td>{{lek.ilosc}}</td>
     <td>
-{{lek.slowniklekow.nazwahadlowa}}
+        <form method="post" action="{{ path('medykament_utylizuj', {'id': lek.id}) }}" onsubmit="return confirm('Zutylizować?');">
+        <input type="text" name="liczba" placeholder="liczba" />
+        <button class="btn btn-success">Utylizuj</button>
+        </form>
     </td>
     <td>
-{{lek.datawaznosci|date}}
+        <form method="post" action="{{ path('medykament_wydaj', {'id': lek.id}) }}" onsubmit="return confirm('Wydać?');">
+        <input type="text" name="liczba" placeholder="liczba" />
+        <button class="btn btn-success">Wydaj</button>
+        </form>
     </td>
-    <td>
-{{lek.ilosc}}
-    </td>
-    <td>
-    <form method="post" action="{{ path('medykament_utylizuj', {'id': lek.id}) }}" onsubmit="return confirm('Zutylizować?');">
-   <input type="text" name="liczba" placeholder="liczba" />
-    <button class="btn">Utylizuj</button>
-</form>
 
-<form method="post" action="{{ path('medykament_wydaj', {'id': lek.id}) }}" onsubmit="return confirm('Wydać?');">
-    <input type="text" name="liczba" placeholder="liczba" />
-    <button class="btn">Wydaj</button>
-</form>
-
-    </td>
     </tr>
 {% endfor %}
     </table>
-    <a href="{{ path('apteczka_index') }}">back to list</a>
+    <a href="{{ path('apteczka_index') }}">Wróć do listy apteczek</a>
 
-    <a href="{{ path('apteczka_edit', {'id': apteczka.id}) }}">edit</a>
+    <a href="{{ path('apteczka_edit', {'id': apteczka.id}) }}">Edytuj</a>
 
     {{ include('apteczka/_delete_form.html.twig') }}
+    
 {% endblock %}
