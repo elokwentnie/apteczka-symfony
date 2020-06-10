@@ -29,6 +29,11 @@
         
     </nav>
     <div class = 'container' style = 'padding: 40px; margin-bottom: 50px; text-align:center; align-items: center;'>
+    {% for message in app.flashes('error') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
         {% block body %}
 
         {% endblock %}

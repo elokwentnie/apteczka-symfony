@@ -26,6 +26,8 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public const LOGIN_ROUTE = 'app_login';
 
+    public const R_ROUTE = 'app_register';
+
     private $entityManager;
     private $urlGenerator;
     private $csrfTokenManager;
@@ -41,12 +43,15 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function supports(Request $request)
     {
-        return self::LOGIN_ROUTE === $request->attributes->get('_route')
+        return (self::LOGIN_ROUTE === $request->attributes->get('_route') || self::R_ROUTE === $request->attributes->get('_route'))
             && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
     {
+        if (self::R_ROUTE === $request->attributes->get('_route')) {
+            return [];
+        }
         $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
@@ -62,6 +67,9 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        if(empty($credentials)) {
+            return null;
+        }
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
@@ -77,8 +85,11 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
         return $user;
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, ?UserInterface $user)
     {
+        if (null === $user && empty($credentials)) {
+            return true;
+        }
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
@@ -92,6 +103,9 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        if (self::R_ROUTE === $request->attributes->get('_route')) {
+            return;
+        }
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }

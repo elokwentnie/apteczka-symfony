@@ -15,7 +15,7 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        var_dump($this->getDoctrine()->getManager()->getRepository(User::class)->findAll());
+        // var_dump($this->getDoctrine()->getManager()->getRepository(User::class)->findAll());
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }
