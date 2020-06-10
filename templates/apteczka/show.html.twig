@@ -23,7 +23,7 @@
     <td>
         <form method="post" action="{{ path('medykament_utylizuj', {'id': lek.id}) }}" onsubmit="return confirm('Zutylizować?');">
         <input type="text" name="liczba" placeholder="liczba" />
-        <button class="btn btn-success">Utylizuj</button>
+        <button class="btn btn-danger">Utylizuj</button>
         </form>
     </td>
     <td>
@@ -36,10 +36,10 @@
     </tr>
 {% endfor %}
     </table>
-    <a href="{{ path('apteczka_index') }}">Wróć do listy apteczek</a>
+    <a class='btn btn-info' href="{{ path('apteczka_index') }}">Wróć do listy apteczek</a>
 
-    <a href="{{ path('apteczka_edit', {'id': apteczka.id}) }}">Edytuj</a>
-
+    <a class='btn btn-primary' href="{{ path('apteczka_edit', {'id': apteczka.id}) }}">Edytuj</a>
+<br><br>
     {{ include('apteczka/_delete_form.html.twig') }}
     
 {% endblock %}

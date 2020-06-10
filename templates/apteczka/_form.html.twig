@@ -3,22 +3,27 @@
 <br/> <label>Nazwij swoją apteczkę</label> <br/>
     {{ form_widget(form.nazwa) }}
     </br/>
+<div class="container form-group">
     <ul id="email-fields-list"
         data-prototype="{{ form_widget(form.medykamenty.vars.prototype)|e }}"
         data-widget-tags="{{ '<p></p>'|e }}"
         data-widget-counter="{{ form.medykamenty|length }}">
     {% for emailField in form.medykamenty %}
-        <p>
+        <p class="form-group">
             {{ form_errors(emailField) }}
             {{ form_widget(emailField) }}
+            <label style="float:left">Cena</label>
+            <input type="number" style="float:left"><br>
         </p>
     {% endfor %}
-    </ul>
 
+    </ul>
+</div>
     <button type="button"
         class="add-another-collection-widget" style = "height: 45px; margin-top:2px; border: none"
-        data-list-selector="#email-fields-list">Dodaj lek</button><br/><br />
+        data-list-selector="#email-fields-list">Dodaj lek</button><br/><br/>
     <button class="btn btn-success">{{ button_label|default('Zapisz') }}</button>
+
 {{ form_end(form) }}
 
 
