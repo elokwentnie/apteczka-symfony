@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Apteczka{% endblock %}
+{% block title %}Apteczka - Tworzenie{% endblock %}
 
 {% block body %}
-    <h1>Create new Apteczka</h1>
+<div style = 'text-align: center'>
+    <h1>Stwórz nową apteczkę</h1>
 
     {{ include('apteczka/_form.html.twig') }}
 
-    <a href="{{ path('apteczka_index') }}">back to list</a>
+    <a href="{{ path('apteczka_index') }}">Wróć do listy</a>
+</div>
 {% endblock %}

@@ -3,15 +3,24 @@
 {% block title %}Twoje Apteczki{% endblock %}
 
 {% block body %}
-<p>Zutylizuj przeterminowane leki z poniższych apteczek:</p>
-    <ul style="color:red">
-     {% for p  in przeterminowane %}
-         <li>{{p}}</li>
-     {% endfor %}
-    </ul>
-    <h1>Twoje Apteczki</h1>
+<div>
+<div class="card text-white bg-danger mb-3" style = 'margin-top: 20px;'>
+  <h5 class="card-header">Uwaga!</h5>
+  <div class="card-body">
+    <h5 class="card-title">Zutylizuj przeterminowane leki z poniższych apteczek:</h5>
+    <p class="card-text">
+        <ul>
+        {% for p  in przeterminowane %}
+            <li>{{p}}</li>
+        {% endfor %}
+        </ul>
+    </p>
+  </div>
+</div>
 
-    <table class="table">
+    <h1 style = 'padding: 20px; margin-top: 50px;'>Twoje Apteczki</h1>
+
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Id</th>
@@ -38,5 +47,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('apteczka_new') }}">Stwórz nową apteczkę</a>
+    <div class = 'btn btn-success' style = 'color: white'><a style = 'text-decoration: none; color: white;' href="{{ path('apteczka_new') }}">Stwórz nową apteczkę</a></div>
+    </div>
 {% endblock %}

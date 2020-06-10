@@ -92,7 +92,6 @@ class Apteczka
     {
         if ($this->medykamenty->contains($medykamenty)) {
             $this->medykamenty->removeElement($medykamenty);
-            // set the owning side to null (unless already changed)
             if ($medykamenty->getApteczka() === $this) {
                 $medykamenty->setApteczka(null);
             }

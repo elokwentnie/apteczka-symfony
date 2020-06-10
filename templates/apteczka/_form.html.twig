@@ -1,22 +1,24 @@
 {% form_theme form 'foundation_5_layout.html.twig' %}
 {{ form_start(form) }}
+<br/> <label>Nazwij swoją apteczkę</label> <br/>
     {{ form_widget(form.nazwa) }}
+    </br/>
     <ul id="email-fields-list"
         data-prototype="{{ form_widget(form.medykamenty.vars.prototype)|e }}"
-        data-widget-tags="{{ '<li></li>'|e }}"
+        data-widget-tags="{{ '<p></p>'|e }}"
         data-widget-counter="{{ form.medykamenty|length }}">
     {% for emailField in form.medykamenty %}
-        <li>
+        <p>
             {{ form_errors(emailField) }}
             {{ form_widget(emailField) }}
-        </li>
+        </p>
     {% endfor %}
     </ul>
 
     <button type="button"
-        class="add-another-collection-widget"
-        data-list-selector="#email-fields-list">Add another email</button>
-    <button class="btn">{{ button_label|default('Save') }}</button>
+        class="add-another-collection-widget" style = "height: 45px; margin-top:2px; border: none"
+        data-list-selector="#email-fields-list">Dodaj lek</button><br/><br />
+    <button class="btn btn-success">{{ button_label|default('Zapisz') }}</button>
 {{ form_end(form) }}
 
 

@@ -41,7 +41,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isVerified = false;
+    private $isVerified = true;
 
     /**
      * @ORM\OneToMany(targetEntity=Apteczka::class, mappedBy="user", orphanRemoval=true)
