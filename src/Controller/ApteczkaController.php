@@ -83,7 +83,7 @@ class ApteczkaController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if($security->getUser() !== $apteczka->getUser()) {
-            die('to nie twoja apteczka złodzieju');
+            die('to nie twoja apteczka');
         }
         return $this->render('apteczka/show.html.twig', [
             'apteczka' => $apteczka,
@@ -127,7 +127,7 @@ class ApteczkaController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if($security->getUser() !== $apteczka->getUser()) {
-            die('to nie twoja apteczka złodzieju');
+            die('to nie twoja apteczka ');
         }
 
         if ($this->isCsrfTokenValid('delete'.$apteczka->getId(), $request->request->get('_token'))) {
