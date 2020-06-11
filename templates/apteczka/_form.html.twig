@@ -1,6 +1,6 @@
 {% form_theme form 'foundation_5_layout.html.twig' %}
 {{ form_start(form) }}
-<br/> <label>Nazwij swoją apteczkę</label> <br/>
+<br/><p>Nazwij swoją apteczkę : </p><br>
     {{ form_widget(form.nazwa) }}
     </br/>
 <div class="container form-group">
@@ -12,8 +12,10 @@
         <p class="form-group">
             {{ form_errors(emailField) }}
             {{ form_widget(emailField) }}
+            <div class="cena">
             <label style="float:left">Cena</label>
             <input type="number" style="float:left"><br>
+    </div>
         </p>
     {% endfor %}
 
@@ -49,9 +51,11 @@ jQuery(document).ready(function () {
         var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
         newElem.appendTo(list);
         $('.asd').select2();
+
     });
 });
 $(document).ready(function() {
     $('.asd').select2();
+
 });
 </script>

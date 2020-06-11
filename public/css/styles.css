@@ -9,10 +9,21 @@
     margin-top:3.25em;
 }
 
-
-
 body {
-    background-image: url(/background.jpg);
+    background-image: url(/background.png);
     background-attachment: fixed;
     background-repeat: no-repeat;
 }
+
+/*#apteczka_medykamenty_0 select, span, input{*/
+/*    margin: 5px;*/
+/*    text-align: center;*/
+/*    align-items: center;*/
+/*    display: block;*/
+/*}*/
+
+/*#email-fields-list ul*/
+/*{*/
+/*    margin-left:5em;*/
+/*}*/
+
